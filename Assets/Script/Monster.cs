@@ -50,11 +50,13 @@ public class Monster : Unit
 			sight.viewRadius = atkrange;
 			sight.viewAngle = atkAngle;
 		}
+		
 		AddState();
 		AddAtkList();
 	}
 	protected virtual void OnEnable()
 	{
+		navMesh.speed = speed;
 		Reset();
 	}
 	protected virtual void Start()
@@ -257,6 +259,11 @@ public class Monster : Unit
 
 	public virtual void IdleAction()
 	{
-
+		ChangeState(Enum.MonsterState.Search);	
+	}
+	protected void ChangeSpeed(float changeSpeed)
+	{
+		speed = Mathf.Lerp(speed, changeSpeed, Time.deltaTime * 3);
+		navMesh.speed = speed;
 	}
 }

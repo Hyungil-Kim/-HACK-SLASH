@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{15DCF4D4-C92D-D7D8-1EDE-9B62906D5B60}</ProjectGuid>
+    <ProjectGuid>{EF9703A1-9C1C-6006-5DBC-AEF4D45950A3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -64,6 +64,7 @@
     <Compile Include="Assets\Script\Enum.cs" />
     <Compile Include="Assets\Script\ObjectPoolManager.cs" />
     <Compile Include="Assets\Script\Player.cs" />
+    <Compile Include="Assets\Script\M_Beholder.cs" />
     <Compile Include="Assets\Script\M_Mimic.cs" />
     <Compile Include="Assets\Script\Unit.cs" />
     <Compile Include="Assets\Script\Singleton.cs" />
