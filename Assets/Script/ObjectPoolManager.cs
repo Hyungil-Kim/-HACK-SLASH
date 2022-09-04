@@ -25,6 +25,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
 	private void Start()
 	{
 		Init();
+		DontDestroyOnLoad(this);
 	}
 	private void Init()
 	{
@@ -48,7 +49,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
 			return;
 		}
 
-		GameObject sample = Instantiate(data.prefab);
+		GameObject sample =data.prefab;
 		sample.name = data.prefab.name;
 		sample.SetActive(false);
 

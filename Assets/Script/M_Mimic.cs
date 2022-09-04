@@ -48,4 +48,11 @@ public class M_Mimic : Monster
 		float distance = Vector3.Distance(target.transform.position, transform.position);
 		animator.SetFloat(A_attackRange, distance * 0.35f);
 	}
+	public override void IdleAction()
+	{
+		if (CheckDistanceToPlayer(1f))
+		{
+			ChangeState(Enum.MonsterState.Search);
+		}
+	}
 }

@@ -6,7 +6,6 @@ public class MStateIdle : IState
 {
 	Monster fsm;
 	Animator animator;
-	private bool turnSearch = false;
 	public MStateIdle(Monster _fsm)
 	{
 		fsm = _fsm;
@@ -14,7 +13,6 @@ public class MStateIdle : IState
 	}
 	public void StateEnter()
 	{
-		turnSearch = false;
 	}
 
 	public void StateExit()
@@ -27,10 +25,7 @@ public class MStateIdle : IState
 
 	public void StateUpdate()
 	{
-		if (fsm.CheckDistanceToPlayer(1f))
-		{
-			fsm.ChangeState(Enum.MonsterState.Search);
-		}
+		fsm.IdleAction();
 	}
 }
 public class MStateSearch : IState

@@ -28,21 +28,21 @@ public class Monster : Unit
 	private int IsMoveId = Animator.StringToHash("IsMove");
 	private int IsAttackId = Animator.StringToHash("IsAttack");
 	private int IsDieId = Animator.StringToHash("IsDie");
-
-	[System.NonSerialized]
+	
+	[NonSerialized]
 	public Animator animator;
 
 	private List<Action> atkList = new List<Action>();
 	private Dictionary<MonsterState, IState> dicState = new Dictionary<MonsterState, IState>();
-
 	private StateMachine stateMachine;
 	[SerializeField]
 	public MonsterState CurrentState;
+
+	#region MonoBehaviour
 	protected virtual void Awake()
 	{
 		animator = GetComponent<Animator>();
 		navMesh = GetComponent<NavMeshAgent>();
-		target = GameManager.Instance.player.GetComponent<Player>();
 		sight = GetComponent<FieldOfView>();
 		spawner = GetComponentInParent<Spawner>();
 		if (sight != null)
@@ -57,30 +57,9 @@ public class Monster : Unit
 	{
 		Reset();
 	}
-	protected virtual void Reset()
-	{
-		hp = maxHp;
-		ChangeState(MonsterState.Idle);
-		ResetTimer();
-		animator.Rebind();
-		animator.Update(0f);
-	}
 	protected virtual void Start()
 	{
-	}
-	private void AddState()
-	{
-		IState idle = new MStateIdle(this);
-		IState search = new MStateSearch(this);
-		IState attack = new MStateAtk(this);
-		IState die = new MStateDie(this);
-
-		dicState.Add(MonsterState.Idle, idle);
-		dicState.Add(MonsterState.Search, search);
-		dicState.Add(MonsterState.Attack, attack);
-		dicState.Add(MonsterState.Dead, die);
-
-		stateMachine = new StateMachine(idle);
+		target = GameManager.Instance.player.GetComponent<Player>();
 	}
 	protected virtual void Update()
 	{
@@ -98,55 +77,33 @@ public class Monster : Unit
 	{
 		stateMachine.StateFixedUpdate();
 	}
-	public bool CheckDistanceToPlayer(float range)
-	{
-		if (target == null) { return false; }
+	#endregion MonoBehaviour
 
-		float distance = Vector3.Distance(target.transform.position, transform.position);
+	#region Virtual Function
+	protected virtual void Reset()
+	{
+		hp = maxHp;
+		ChangeState(MonsterState.Idle);
+		ResetTimer();
+		animator.Rebind();
+		animator.Update(0f);
+	}
 
-		if(distance < range) { return true;}
-	
-		return false;
-	}
-	public virtual void AddAtkList()
+	protected virtual void AddAtkList()
 	{
 
-	}
-	public void ChangeState(MonsterState state)
-	{
-		stateMachine.SetState(dicState[state]);
-	}
-	public void IsMove(bool boolean)
-	{
-		isMove = boolean;
-		animator.SetBool(IsMoveId, boolean);
 	}
 
 	public virtual void Search()
 	{
 		if (CheckDistanceToPlayer(searchrange))
-		{ 
+		{
 			MoveDone();
 			ChangeState(MonsterState.Attack);
-			return; 
+			return;
 		}
-		MovePosition(RandomPointInSphere(spawner.radius),false);
+		MovePosition(RandomPointInSphere(spawner.radius), false);
 
-	}
-	private void MovePosition(Vector3 des,bool update)
-	{
-		if (!isMove || update)
-		{
-			destination = des;
-			IsMove(true);
-		}
-		navMesh.SetDestination(destination);
-
-		var dis = Vector3.Distance(transform.position, destination);
-		if (dis < 1f)
-		{
-			MoveDone();
-		}
 	}
 	protected virtual void MoveDone()
 	{
@@ -154,19 +111,11 @@ public class Monster : Unit
 		StartCoroutine(CheckRotation(target.gameObject));
 		IsMove(false);
 	}
-
-	public Vector3 RandomPointInSphere(float radius)
-	{
-		Vector3 getPoint = Random.onUnitSphere;
-		getPoint.y = 0.0f;
-		float r = Random.Range(0.0f, radius);
-		return getPoint * r;
-	}
 	public virtual void Attack(Action action = null)
 	{
-		if(CheckDistanceToPlayer(atkrange) || isAttack)
+		if (CheckDistanceToPlayer(atkrange) || isAttack)
 		{
-			if(isMove)
+			if (isMove)
 			{
 				MoveDone();
 			}
@@ -182,7 +131,7 @@ public class Monster : Unit
 
 				StopAllCoroutines();
 
-				if(action != null)
+				if (action != null)
 					action();
 
 				animator.SetTrigger(IsAttackId);
@@ -192,17 +141,81 @@ public class Monster : Unit
 				DelayTime(() => EndAttack());
 			}
 		}
-		else if(!CheckDistanceToPlayer(atkrange)) 
+		else if (!CheckDistanceToPlayer(atkrange))
 		{
 			if (!isAttack)
-				MovePosition(target.transform.position,true);
+				MovePosition(target.transform.position, true);
 		}
 	}
+
 	protected virtual void EndAttack()
 	{
 		isAttack = false;
 		navMesh.updateRotation = true;
 	}
+	#endregion Virtual Function
+
+	private void AddState()
+	{
+		IState idle = new MStateIdle(this);
+		IState search = new MStateSearch(this);
+		IState attack = new MStateAtk(this);
+		IState die = new MStateDie(this);
+
+		dicState.Add(MonsterState.Idle, idle);
+		dicState.Add(MonsterState.Search, search);
+		dicState.Add(MonsterState.Attack, attack);
+		dicState.Add(MonsterState.Dead, die);
+
+		stateMachine = new StateMachine(idle);
+	}
+	
+	public bool CheckDistanceToPlayer(float range)
+	{
+		if (target == null) { return false; }
+
+		float distance = Vector3.Distance(target.transform.position, transform.position);
+
+		if(distance < range) { return true;}
+	
+		return false;
+	}
+	public void ChangeState(MonsterState state)
+	{
+		stateMachine.SetState(dicState[state]);
+	}
+	public void IsMove(bool boolean)
+	{
+		isMove = boolean;
+		animator.SetBool(IsMoveId, boolean);
+	}
+
+
+	private void MovePosition(Vector3 des,bool update)
+	{
+		if (!isMove || update)
+		{
+			destination = des;
+			IsMove(true);
+		}
+		navMesh.SetDestination(destination);
+
+		var dis = Vector3.Distance(transform.position, destination);
+		if (dis < 1f)
+		{
+			MoveDone();
+		}
+	}
+	
+
+	public Vector3 RandomPointInSphere(float radius)
+	{
+		Vector3 getPoint = Random.onUnitSphere;
+		getPoint.y = 0.0f;
+		float r = Random.Range(0.0f, radius);
+		return getPoint * r;
+	}
+	
 	private IEnumerator CheckRotation(GameObject target)
 	{
 		while (transform.rotation != Quaternion.LookRotation(target.transform.position - transform.position))
@@ -242,4 +255,8 @@ public class Monster : Unit
 		sight.viewMeshFilter.gameObject.SetActive(boolean);
 	}
 
+	public virtual void IdleAction()
+	{
+
+	}
 }
