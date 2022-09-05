@@ -9,6 +9,9 @@ public class M_Beholder : Monster
 {
 	private int A_Speed = Animator.StringToHash("Speed");
 	private int A_AttackEnd = Animator.StringToHash("AttackEnd");
+	
+	[SerializeField]
+	private GameObject laser;
 
 	protected override void FixedUpdate()
 	{
@@ -37,18 +40,25 @@ public class M_Beholder : Monster
 	private void Attack1()
 	{
 		IsAttackId = Animator.StringToHash("IsAttack1");
-		if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-		{
-			animator.SetTrigger(A_AttackEnd);
-		}
 	}
 
 	private void Attack2()
 	{
 		IsAttackId = Animator.StringToHash("IsAttack2");
-		if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-		{
-			animator.SetTrigger(A_AttackEnd);
-		}
+	}
+
+
+	protected override void EndAttack()
+	{
+		base.EndAttack();
+		animator.SetTrigger(A_AttackEnd);
+	}
+	private void StartLaser()
+	{
+		laser.SetActive(true);
+	}
+	private void EndLaser()
+	{
+		laser.SetActive(false);
 	}
 }
