@@ -12,7 +12,16 @@ public class M_Beholder : Monster
 	
 	[SerializeField]
 	private GameObject laser;
-
+	private B_bullet[] bullet = new B_bullet[5];
+	protected override void Start()
+	{
+		base.Start();
+		for(int i = 0;  i< 5;i++)
+		{
+			GameObject spawnBullet = ObjectPoolManager.Instance.Spawn("Beholder_Bullet",gameObject);
+			bullet[i] = spawnBullet.GetComponent<B_bullet>();
+		}
+	}
 	protected override void FixedUpdate()
 	{
 		animator.SetFloat(A_Speed,speed * 0.25f);
@@ -40,6 +49,12 @@ public class M_Beholder : Monster
 	private void Attack1()
 	{
 		IsAttackId = Animator.StringToHash("IsAttack1");
+		for(int i = 0; i < 5;i++)
+		{ 
+			bullet[i].Init(transform, target.transform, 6.0f, 3.0f);
+			bullet[i].gameObject.SetActive(true);
+			StartCoroutine(bullet[i].ShootBullet());
+		}
 	}
 
 	private void Attack2()
