@@ -26,13 +26,13 @@ public class Monster : Unit
 	private bool isAttack;
 
 	private int IsMoveId = Animator.StringToHash("IsMove");
-	private int IsAttackId = Animator.StringToHash("IsAttack");
+	protected int IsAttackId = Animator.StringToHash("IsAttack");
 	private int IsDieId = Animator.StringToHash("IsDie");
 	
 	[NonSerialized]
 	public Animator animator;
-
-	private List<Action> atkList = new List<Action>();
+	[SerializeField]
+	protected Dictionary<Action,float> atkDic = new();
 	private Dictionary<MonsterState, IState> dicState = new Dictionary<MonsterState, IState>();
 	private StateMachine stateMachine;
 	[SerializeField]
@@ -136,6 +136,7 @@ public class Monster : Unit
 				if (action != null)
 					action();
 
+				SelectAttack();
 				animator.SetTrigger(IsAttackId);
 			}
 			if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
@@ -265,5 +266,22 @@ public class Monster : Unit
 	{
 		speed = Mathf.Lerp(speed, changeSpeed, Time.deltaTime * 3);
 		navMesh.speed = speed;
+	}
+	private void SelectAttack()
+	{
+		if (atkDic.Count <= 0) return;
+		var percent = Random.Range(0f, 1f);
+		var total = 0f;
+		Action action = null;
+		foreach (var elem in atkDic)
+		{
+			total += elem.Value;
+			if (total > percent)
+			{
+				action = elem.Key;
+				break;
+			}
+		}
+		action();
 	}
 }
