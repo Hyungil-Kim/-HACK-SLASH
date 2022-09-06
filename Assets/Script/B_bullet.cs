@@ -12,33 +12,38 @@ public class B_bullet : MonoBehaviour
 
 	public void Init(Transform startPos,Transform endPos,float newStartPoint,float newEndPoint)
 	{
+		Vector3 newStartPos = new Vector3(startPos.position.x, startPos.position.y + 2f, startPos.position.z);
 		maxTimer = Random.Range(0.8f, 1.0f);
-		point[0] = startPos.position;
+		point[0] = newStartPos;
 		point[1] = startPos.position +
-			(newStartPoint * Random.Range(-1.0f, 1.0f) * startPos.right) + 
-			(newStartPoint * Random.Range(-0.15f, 1.0f) * startPos.up) +
-			(newStartPoint * Random.Range(-1.0f, -0.8f) * startPos.forward);
+			(newStartPoint * Random.Range(-0.5f, 0.5f) * startPos.right) + 
+			(newStartPoint * Random.Range(0f, 0.5f) * startPos.up) +
+			(newStartPoint * Random.Range(-0.3f, -0.3f) * startPos.forward);
 
 		point[2] = endPos.position +
 		  (newEndPoint * Random.Range(-1.0f, 1.0f) * endPos.right) +
-		  (newEndPoint * Random.Range(-1.0f, 1.0f) * endPos.up) + 
-		  (newEndPoint * Random.Range(0.8f, 1.0f) * endPos.forward);
+		  (newEndPoint * Random.Range(0f, 0f) * endPos.up) + 
+		  (newEndPoint * Random.Range(-1.0f, 1f) * endPos.forward);
 
 		point[3] = endPos.position;
-		transform.position = startPos.position;
+		transform.position = newStartPos;
 	}
-	public IEnumerator ShootBullet()
+	private void Update()
 	{
-		if (timer > maxTimer)
-			yield break;
+		if (gameObject.activeSelf)
+		{
+			if (timer > maxTimer)
+			{
+				ObjectPoolManager.Instance.DeSpawn(gameObject);
+				return;
+			}
+			timer += Time.deltaTime * speed;
 
-		timer += Time.deltaTime * speed;
-
-		transform.position = new Vector3(
-			CubicBezierCurve(point[0].x, point[1].x, point[2].x, point[3].x),
-			CubicBezierCurve(point[0].y, point[1].y, point[2].y, point[3].y),
-			CubicBezierCurve(point[0].z, point[1].z, point[2].z, point[3].z));
-		yield return 0;
+			transform.position = new Vector3(
+				CubicBezierCurve(point[0].x, point[1].x, point[2].x, point[3].x),
+				CubicBezierCurve(point[0].y, point[1].y, point[2].y, point[3].y),
+				CubicBezierCurve(point[0].z, point[1].z, point[2].z, point[3].z));
+		}
 	}
 	private float CubicBezierCurve(float a, float b, float c, float d)
 	{
@@ -57,9 +62,9 @@ public class B_bullet : MonoBehaviour
 	{
 		if (other.tag != "Monster")
 		{
-			StopCoroutine(ShootBullet());
-			timer = 0f;
+			Debug.Log(other);
 			ObjectPoolManager.Instance.DeSpawn(gameObject);
+			timer = 0f;
 		}
 		
 	}

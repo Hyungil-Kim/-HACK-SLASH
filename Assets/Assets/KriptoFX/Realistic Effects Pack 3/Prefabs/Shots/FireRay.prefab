@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 400000}
   - component: {fileID: 10800000}
   - component: {fileID: 11400000}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 19800000}
   - component: {fileID: 19900000}
   - component: {fileID: 11400014}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Distortion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4767,7 +4767,7 @@ GameObject:
   - component: {fileID: 19800002}
   - component: {fileID: 19900002}
   - component: {fileID: 11400010}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Distortion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5039,7 +5039,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -5092,7 +5092,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -5145,7 +5145,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -5198,7 +5198,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -5831,7 +5831,7 @@ ParticleSystem:
     enabled: 1
     x:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -5884,7 +5884,7 @@ ParticleSystem:
         m_RotationOrder: 4
     y:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -9391,7 +9391,7 @@ GameObject:
   - component: {fileID: 19800012}
   - component: {fileID: 19900012}
   - component: {fileID: 11400002}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CoreExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14007,7 +14007,7 @@ GameObject:
   - component: {fileID: 19800004}
   - component: {fileID: 19900004}
   - component: {fileID: 11400020}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CoreExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18622,7 +18622,7 @@ GameObject:
   - component: {fileID: 19800006}
   - component: {fileID: 19900006}
   - component: {fileID: 11400024}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Distortion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23243,7 +23243,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 400012}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EffectOnHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23278,7 +23278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 400014}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23314,7 +23314,7 @@ GameObject:
   - component: {fileID: 400016}
   - component: {fileID: 10800004}
   - component: {fileID: 11400026}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23426,7 +23426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 400018}
   - component: {fileID: 11400006}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FireRay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23463,7 +23463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccc1db87478e94a42875321f75d0c7d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EffectType: 2
+  EffectType: 0
   ColliderRadius: 0.2
   EffectRadius: 0
   UseMoveVector: 0
@@ -23471,7 +23471,7 @@ MonoBehaviour:
   MoveVector: {x: 0, y: 0, z: 1}
   MoveSpeed: 500
   IsHomingMove: 0
-  MoveDistance: 20
+  MoveDistance: 3
   IsVisible: 1
   InstanceBehaviour: 3
   DeactivateTimeDelay: 0
@@ -23489,7 +23489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 400020}
   - component: {fileID: 11400008}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LazyLoad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23535,7 +23535,7 @@ GameObject:
   m_Component:
   - component: {fileID: 400022}
   - component: {fileID: 11400004}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23591,7 +23591,7 @@ GameObject:
   - component: {fileID: 12000000}
   - component: {fileID: 11400012}
   - component: {fileID: 11400018}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LineRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23777,7 +23777,7 @@ GameObject:
   - component: {fileID: 19800008}
   - component: {fileID: 19900008}
   - component: {fileID: 11400022}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28392,7 +28392,7 @@ GameObject:
   - component: {fileID: 19800010}
   - component: {fileID: 19900010}
   - component: {fileID: 11400016}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33031,7 +33031,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 400030}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ParticleScale
   m_TagString: Untagged
   m_Icon: {fileID: 0}

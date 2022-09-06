@@ -63,7 +63,7 @@ public class EffectSettings : MonoBehaviour
 	#if !UNITY_4_3 
 	[Tooltip("Distance flight of the projectile, after which the projectile is deactivated and call a collision event with a null value \"RaycastHit\"")]
 	#endif 
-  public float MoveDistance = 20;
+  public float MoveDistance = 5;
 
 	#if !UNITY_4_3 
 	[Tooltip("Allows you to smoothly activate / deactivate effects which have an indefinite lifetime")]

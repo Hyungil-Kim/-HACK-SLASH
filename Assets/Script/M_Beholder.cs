@@ -49,12 +49,6 @@ public class M_Beholder : Monster
 	private void Attack1()
 	{
 		IsAttackId = Animator.StringToHash("IsAttack1");
-		for(int i = 0; i < 5;i++)
-		{ 
-			bullet[i].Init(transform, target.transform, 6.0f, 3.0f);
-			bullet[i].gameObject.SetActive(true);
-			StartCoroutine(bullet[i].ShootBullet());
-		}
 	}
 
 	private void Attack2()
@@ -76,4 +70,14 @@ public class M_Beholder : Monster
 	{
 		laser.SetActive(false);
 	}
+	private void Shoot()
+	{
+		var targetPos = target.transform;
+		for (int i = 0; i < 5; i++)
+		{
+			bullet[i].Init(transform, targetPos, 6.0f, 3.0f);
+			bullet[i].gameObject.SetActive(true);
+		}
+	}
+
 }
