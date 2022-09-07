@@ -15,22 +15,27 @@ public class Player : Unit
 	[System.NonSerialized]
 	public KeyCode pressedAtkKey;
 
-	private List<KeyCode> atkKeyList = new();
+	private Dictionary<KeyCode, Action> atkKeyCode = new Dictionary<KeyCode, Action>();
 	private Dictionary<PlayerState, IState> dicState = new();
 	
 	private StateMachine stateMachine;
 	[SerializeField]
 	public PlayerState CurrentState;
+	[SerializeField]
+	private GameObject hand;
+	[SerializeField]
+	private PlayerWeapon playerWeapon;
 	private void OnEnable()
 	{
 		Speed = speed;
 		animator = GetComponent<Animator>();
 		GameManager.Instance.player = gameObject;
+		SetWeapon(playerWeapon);
 	}
 	private void Start()
 	{
 		AddState();
-		AddAtkList();
+		SetAtkDic();
 	}
 	private void AddState()
 	{
@@ -46,11 +51,9 @@ public class Player : Unit
 
 		stateMachine = new StateMachine(idle);
 	}
-	private void AddAtkList()
+	private void SetAtkDic()
 	{
-		atkKeyList.Add(KeyCode.Z);
-		atkKeyList.Add(KeyCode.X);
-		atkKeyList.Add(KeyCode.C);
+		atkKeyCode = playerWeapon.atkKeyCode;
 	}
 	private void Update()
 	{
@@ -90,12 +93,12 @@ public class Player : Unit
 
 	public void ChangeAttackState()
 	{
-			foreach(var key in atkKeyList)
+			foreach(var key in atkKeyCode)
 			{
-				if (Input.GetKey(key))
+				if (Input.GetKey(key.Key))
 				{
 					IsAttack(true);
-					pressedAtkKey = key;
+					pressedAtkKey = key.Key;
 					ChangeState(PlayerState.Attack);
 				}
 			}
@@ -144,5 +147,22 @@ public class Player : Unit
 		{
 			ChangeState(PlayerState.Dead);
 		}
+	}
+	private void SetWeapon(PlayerWeapon weapon)
+	{
+		GameObject handWeapon = null;
+		for(int i =0; i < hand.transform.childCount;i++)
+		{
+			GameObject elem = hand.transform.GetChild(i).gameObject;
+			if(elem.tag == "Weapon")
+			{
+				handWeapon = elem;
+			}
+		}
+		if (handWeapon != null)
+		{
+			GameObject.Destroy(handWeapon);
+		}
+		Instantiate(weapon.weaponObject, hand.transform);
 	}
 }

@@ -1579,7 +1579,7 @@ MonoBehaviour:
   watingTime: 2
   atkrange: 3
   searchrange: 3
-  atkAngle: 30
+  atkAngle: 20
   CurrentState: 0
   laser: {fileID: 1368372605}
 --- !u!114 &6889659336739365497
