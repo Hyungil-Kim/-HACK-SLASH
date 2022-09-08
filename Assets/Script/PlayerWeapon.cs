@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using Enum;
 [CreateAssetMenu(fileName = "PlayerWeapon", menuName = "Scriptable Ob/PlayerWeapon")]
 public class PlayerWeapon : ScriptableObject
 {
 	public GameObject weaponObject;
-	public GameObject skill_Q_Ob;
-	public GameObject skill_W_Ob;
-	public GameObject skill_E_Ob;
-	public GameObject skill_R_Ob;
-	
+	private Weapon weapon;
+	[SerializeField]
+	public WeaponType weaponType;
 	public Dictionary<KeyCode,Action> atkKeyCode = new();
 
-	private void Awake()
+	private void OnEnable()
 	{
 		AddSkill();
+		weapon = weaponObject.GetComponent<Weapon>();
 	}
 	private void AddSkill()
 	{
@@ -27,18 +26,18 @@ public class PlayerWeapon : ScriptableObject
 	}
 	public void Sklil_Q()
 	{
-
+		weapon.Skill_Q();
 	}
 	public void Sklil_W()
 	{
-
+		weapon.Skill_W();
 	}
 	public void Sklil_E()
 	{
-
+		weapon.Skill_E();
 	}
 	public void Sklil_R()
 	{
-
+		weapon.Skill_R();
 	}
 }

@@ -12,8 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70b131411427c7429b190fbc88afb99, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  weaponObject: {fileID: 0}
-  skill_Q: {fileID: 0}
-  skill_W: {fileID: 0}
-  skill_E: {fileID: 0}
-  skill_R: {fileID: 0}
+  weaponObject: {fileID: 7326222089245910130, guid: 5b5ec9430edbf6843b6ba87e8f7eb166, type: 3}
+  weaponType: 1

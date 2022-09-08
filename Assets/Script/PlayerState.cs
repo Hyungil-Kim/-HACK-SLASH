@@ -73,9 +73,9 @@ public class PStateAtk : IState
 		animator = fsm.animator;
 		atkKeyCodeKey = new Dictionary<KeyCode, Action>
 		{
-			{KeyCode.Z, KeyDown_Z },
-			{KeyCode.X, KeyDown_X },
-			{KeyCode.C, KeyDown_C }
+			{KeyCode.Q, KeyDown_Z },
+			{KeyCode.W, KeyDown_X },
+			{KeyCode.E, KeyDown_C }
 		};
 	}
 	public void StateEnter()
@@ -134,7 +134,7 @@ public class PStateAtk : IState
 	{
 		Debug.Log("SkillC");
 		animator.SetBool(KeyDownCId,true);
-		CoroutineHelper.StartCoroutine(HoldAttack(KeyDownCId,KeyCode.C,true));
+		CoroutineHelper.StartCoroutine(HoldAttack(KeyDownCId,KeyCode.E,true));
 	}
 
 	private void Attack()

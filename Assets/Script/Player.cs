@@ -9,6 +9,7 @@ public class Player : Unit
 	private bool isAttack;
 	private int IsMoveId = Animator.StringToHash("IsMove");
 	private int IsAttackId = Animator.StringToHash("IsAttack");
+	private int WeaponTypeId = Animator.StringToHash("WeaponType");
 
 	[System.NonSerialized]
 	public Animator animator;
@@ -25,6 +26,7 @@ public class Player : Unit
 	private GameObject hand;
 	[SerializeField]
 	private PlayerWeapon playerWeapon;
+	private int WeaponType = 0;
 	private void OnEnable()
 	{
 		Speed = speed;
@@ -153,10 +155,9 @@ public class Player : Unit
 		GameObject handWeapon = null;
 		for(int i =0; i < hand.transform.childCount;i++)
 		{
-			GameObject elem = hand.transform.GetChild(i).gameObject;
-			if(elem.tag == "Weapon")
+			if(hand.transform.GetChild(i).gameObject.tag == "Weapon")
 			{
-				handWeapon = elem;
+				handWeapon = hand.transform.GetChild(i).gameObject;
 			}
 		}
 		if (handWeapon != null)
@@ -164,5 +165,7 @@ public class Player : Unit
 			GameObject.Destroy(handWeapon);
 		}
 		Instantiate(weapon.weaponObject, hand.transform);
+		WeaponType = (int)weapon.weaponType;
+		animator.SetInteger(WeaponTypeId, WeaponType);
 	}
 }
