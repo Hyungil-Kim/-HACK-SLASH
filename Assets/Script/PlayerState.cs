@@ -61,42 +61,29 @@ public class PStateMove : IState
 public class PStateAtk : IState
 {
 	Player fsm;
-	Animator animator;
-	Dictionary<KeyCode, Action> atkKeyCodeKey;
-	private int KeyDownZId = Animator.StringToHash("SkillZ");
-	private int KeyDownXId = Animator.StringToHash("SkillX");
-	private int KeyDownCId = Animator.StringToHash("SkillC");
 	private bool canMove =false;
 	public PStateAtk(Player _fsm)
 	{
 		fsm = _fsm;
-		animator = fsm.animator;
-		atkKeyCodeKey = new Dictionary<KeyCode, Action>
-		{
-			{KeyCode.Q, KeyDown_Z },
-			{KeyCode.W, KeyDown_X },
-			{KeyCode.E, KeyDown_C }
-		};
 	}
 	public void StateEnter()
 	{
-		foreach (var dic in atkKeyCodeKey)
+		foreach (var dic in fsm.atkKeyCode)
 		{
 			if (dic.Key == fsm.pressedAtkKey)
 			{
 				dic.Value();
 			}
-		}
-		
+		}	
 	}
-
 	public void StateExit()
 	{
 		fsm.IsAttack(false);
 	}
+
 	public void StateFixedUpdate()
 	{
-		if (canMove)
+		if (fsm.canMove)
 		{
 			float xAxis = Input.GetAxis("Horizontal");
 			float yAxis = Input.GetAxis("Vertical");
@@ -109,7 +96,7 @@ public class PStateAtk : IState
 	{
 		if (Input.anyKeyDown)
 		{
-			foreach (var dic in atkKeyCodeKey)
+			foreach (var dic in fsm.atkKeyCode)
 			{
 				if (Input.GetKeyDown(dic.Key))
 				{
@@ -117,54 +104,6 @@ public class PStateAtk : IState
 				}
 			}
 		}
-	}
-	private void KeyDown_Z()
-	{
-		Debug.Log("SkillZ");
-		animator.SetTrigger(KeyDownZId);
-		Attack();
-	}
-	private void KeyDown_X() 
-	{
-		Debug.Log("SkillX");
-		animator.SetTrigger(KeyDownXId);
-		Attack();
-	}
-	private void KeyDown_C() 
-	{
-		Debug.Log("SkillC");
-		animator.SetBool(KeyDownCId,true);
-		CoroutineHelper.StartCoroutine(HoldAttack(KeyDownCId,KeyCode.E,true));
-	}
-
-	private void Attack()
-	{
-		Debug.Log("Attack");
-		CoroutineHelper.StartCoroutine(CheckAttackAnimationEnd(0.8f));
-
-	}
-	private IEnumerator HoldAttack(int id,KeyCode keyCode,bool isMove = false)
-	{
-		canMove = isMove;
-		while (true)
-		{
-			if (!Input.GetKey(keyCode))
-			{
-				animator.SetBool(id, false);
-				CoroutineHelper.StartCoroutine(CheckAttackAnimationEnd(0.5f));
-				canMove = false; 
-				yield break;
-			}
-			yield return new WaitForEndOfFrame();
-		}
-	}
-	private IEnumerator CheckAttackAnimationEnd(float exitTime)
-	{
-		while ( animator.GetCurrentAnimatorStateInfo(0).normalizedTime < exitTime)
-		{
-			yield return null;
-		}
-		fsm.ChangeState(PlayerState.Idle);
 	}
 }
 

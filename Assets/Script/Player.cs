@@ -15,8 +15,8 @@ public class Player : Unit
 	public Animator animator;
 	[System.NonSerialized]
 	public KeyCode pressedAtkKey;
-
-	private Dictionary<KeyCode, Action> atkKeyCode = new Dictionary<KeyCode, Action>();
+	[System.NonSerialized]
+	public Dictionary<KeyCode, Action> atkKeyCode = new Dictionary<KeyCode, Action>();
 	private Dictionary<PlayerState, IState> dicState = new();
 	
 	private StateMachine stateMachine;
@@ -27,17 +27,18 @@ public class Player : Unit
 	[SerializeField]
 	private PlayerWeapon playerWeapon;
 	private int WeaponType = 0;
+	[System.NonSerialized]
+	public bool canMove;
 	private void OnEnable()
 	{
 		Speed = speed;
 		animator = GetComponent<Animator>();
 		GameManager.Instance.player = gameObject;
-		SetWeapon(playerWeapon);
 	}
 	private void Start()
 	{
 		AddState();
-		SetAtkDic();
+		SetWeapon(playerWeapon);
 	}
 	private void AddState()
 	{
@@ -52,10 +53,6 @@ public class Player : Unit
 		dicState.Add(PlayerState.Dead, die);
 
 		stateMachine = new StateMachine(idle);
-	}
-	private void SetAtkDic()
-	{
-		atkKeyCode = playerWeapon.atkKeyCode;
 	}
 	private void Update()
 	{
@@ -158,6 +155,7 @@ public class Player : Unit
 			if(hand.transform.GetChild(i).gameObject.tag == "Weapon")
 			{
 				handWeapon = hand.transform.GetChild(i).gameObject;
+				
 			}
 		}
 		if (handWeapon != null)
@@ -166,6 +164,13 @@ public class Player : Unit
 		}
 		Instantiate(weapon.weaponObject, hand.transform);
 		WeaponType = (int)weapon.weaponType;
+		SetWeaponSkill();
 		animator.SetInteger(WeaponTypeId, WeaponType);
+	}
+	private void SetWeaponSkill()
+	{
+		atkKeyCode.Clear();
+		playerWeapon.AddSkill();
+		atkKeyCode = playerWeapon.atkKeyCode;
 	}
 }

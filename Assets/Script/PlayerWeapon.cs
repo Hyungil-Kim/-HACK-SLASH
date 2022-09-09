@@ -11,13 +11,11 @@ public class PlayerWeapon : ScriptableObject
 	[SerializeField]
 	public WeaponType weaponType;
 	public Dictionary<KeyCode,Action> atkKeyCode = new();
-
 	private void OnEnable()
 	{
-		AddSkill();
 		weapon = weaponObject.GetComponent<Weapon>();
 	}
-	private void AddSkill()
+	public void AddSkill()
 	{
 		atkKeyCode.Add(KeyCode.Q, Sklil_Q);
 		atkKeyCode.Add(KeyCode.W, Sklil_W);
