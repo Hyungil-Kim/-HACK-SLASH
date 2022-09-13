@@ -68,7 +68,13 @@ public class PStateAtk : IState
 	}
 	public void StateEnter()
 	{
-		
+		foreach (var key in fsm.atkKeyCode)
+		{
+			if(key.Key == fsm.curAtkCode)
+			{
+				key.Value();
+			}
+		}
 	}
 	public void StateExit()
 	{
@@ -91,7 +97,7 @@ public class PStateAtk : IState
 	{
 		foreach (var key in fsm.atkKeyCode)
 		{
-			if (Input.GetKey(key.Key))
+			if (Input.GetKeyDown(key.Key))
 			{
 				key.Value();
 			}

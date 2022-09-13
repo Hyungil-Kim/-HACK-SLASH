@@ -26,7 +26,9 @@ public class Weapon_Sword : MonoBehaviour , IWeapon
 	public void Skill_E()
 	{
 		Debug.Log("SkillE");
-		CoroutineHelper.StartCoroutine(HoldAttack(KeyDownEId, KeyCode.E, true));
+		currentKey = KeyDownEId;
+		Attack();
+		CoroutineHelper.StartCoroutine(HoldAttack(currentKey, KeyCode.E, true));
 	}
 
 	public void Skill_R()
@@ -36,7 +38,6 @@ public class Weapon_Sword : MonoBehaviour , IWeapon
 	private void Attack()
 	{
 		GameManager.Instance.player.GetComponent<Player>().animator.SetTrigger(currentKey);
-		CoroutineHelper.StartCoroutine(CheckAttackAnimationEnd(0.9f));
 	}
 	private IEnumerator CheckAttackAnimationEnd(float exitTime)
 	{
@@ -45,7 +46,7 @@ public class Weapon_Sword : MonoBehaviour , IWeapon
 			Debug.Log("End");
 			ResetAni(currentKey);
 			GameManager.Instance.player.GetComponent<Player>().ChangeState(PlayerState.Idle);
-			yield return new WaitForEndOfFrame();
+			yield break;
 		}
 			Debug.Log("End2");
 	}
@@ -56,8 +57,7 @@ public class Weapon_Sword : MonoBehaviour , IWeapon
 		{
 			if (!Input.GetKey(keyCode))
 			{
-				GameManager.Instance.player.GetComponent<Player>().animator.SetBool(id, false);
-				CoroutineHelper.StartCoroutine(CheckAttackAnimationEnd(0.9f));
+				GameManager.Instance.player.GetComponent<Player>().animator.SetTrigger(id);
 				GameManager.Instance.player.GetComponent<Player>().canMove = false;
 				yield break;
 			}
@@ -68,5 +68,10 @@ public class Weapon_Sword : MonoBehaviour , IWeapon
 	public void ResetAni(int curKey)
 	{
 		GameManager.Instance.player.GetComponent<Player>().animator.ResetTrigger(currentKey);
+	}
+	public void EndAni()
+	{
+		ResetAni(currentKey);
+		GameManager.Instance.player.GetComponent<Player>().ChangeState(PlayerState.Idle);
 	}
 }

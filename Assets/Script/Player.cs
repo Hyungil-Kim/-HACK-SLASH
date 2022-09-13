@@ -24,9 +24,11 @@ public class Player : Unit
 	private GameObject hand;
 	[SerializeField]
 	private PlayerWeapon playerWeapon;
-	private int WeaponType = 0;
+	private int weaponType = 0;
 	[System.NonSerialized]
 	public bool canMove;
+	[System.NonSerialized]
+	public KeyCode curAtkCode;
 	private void OnEnable()
 	{
 		Speed = speed;
@@ -94,6 +96,7 @@ public class Player : Unit
 			{
 				if (Input.GetKeyDown(key.Key))
 				{
+					curAtkCode = key.Key;
 					animator.SetTrigger(IsAttackId);
 					ChangeState(PlayerState.Attack);
 				}
@@ -159,14 +162,18 @@ public class Player : Unit
 			GameObject.Destroy(handWeapon);
 		}
 		Instantiate(weapon.weaponObject, hand.transform);
-		WeaponType = (int)weapon.weaponType;
+		weaponType = (int)weapon.weaponType;
 		SetWeaponSkill();
-		animator.SetInteger(WeaponTypeId, WeaponType);
+		animator.SetInteger(WeaponTypeId, weaponType);
 	}
 	private void SetWeaponSkill()
 	{
 		atkKeyCode.Clear();
 		playerWeapon.AddSkill();
 		atkKeyCode = playerWeapon.atkKeyCode;
+	}
+	private void EndWeaponAni()
+	{
+		playerWeapon.weapon.EndAni();
 	}
 }

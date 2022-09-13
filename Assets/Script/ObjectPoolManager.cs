@@ -6,7 +6,7 @@ using ObjectType = System.String;
 [Serializable]
 public class ObjectPoolData
 {
-	public const int MIN_COUNT = 4;
+	public const int MIN_COUNT = 5;
 	public string type = null;
 	public GameObject prefab;
 	public int min_count = MIN_COUNT;
@@ -22,7 +22,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
 	private Dictionary<ObjectType, Stack<GameObject>> poolDic;
 	private Dictionary<GameObject, Stack<GameObject>> clonePoolDic;
 
-	private void Start()
+	private void OnEnable()
 	{
 		Init();
 		DontDestroyOnLoad(this);

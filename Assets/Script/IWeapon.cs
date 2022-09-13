@@ -8,5 +8,5 @@ public interface IWeapon
     void Skill_W();
     void Skill_E();
     void Skill_R();
-    void ResetAni(int curKey);
+    void EndAni();
 }

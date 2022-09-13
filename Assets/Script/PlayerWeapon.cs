@@ -7,7 +7,8 @@ using Enum;
 public class PlayerWeapon : ScriptableObject
 {
 	public GameObject weaponObject;
-	private IWeapon weapon;
+	[NonSerialized]
+	public IWeapon weapon;
 	[SerializeField]
 	public WeaponType weaponType;
 	public Dictionary<KeyCode,Action> atkKeyCode = new();
