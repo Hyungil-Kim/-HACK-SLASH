@@ -60,25 +60,20 @@ public class PStateMove : IState
 
 public class PStateAtk : IState
 {
-	Player fsm;
-	private bool canMove =false;
+	Player fsm; 
+	private int IsAttackId = Animator.StringToHash("IsAttack");
 	public PStateAtk(Player _fsm)
 	{
 		fsm = _fsm;
 	}
 	public void StateEnter()
 	{
-		foreach (var dic in fsm.atkKeyCode)
-		{
-			if (dic.Key == fsm.pressedAtkKey)
-			{
-				dic.Value();
-			}
-		}	
+		
 	}
 	public void StateExit()
 	{
 		fsm.IsAttack(false);
+		fsm.animator.ResetTrigger(IsAttackId);
 	}
 
 	public void StateFixedUpdate()
@@ -94,14 +89,11 @@ public class PStateAtk : IState
 	}
 	public void StateUpdate()
 	{
-		if (Input.anyKeyDown)
+		foreach (var key in fsm.atkKeyCode)
 		{
-			foreach (var dic in fsm.atkKeyCode)
+			if (Input.GetKey(key.Key))
 			{
-				if (Input.GetKeyDown(dic.Key))
-				{
-					dic.Value();
-				}
+				key.Value();
 			}
 		}
 	}

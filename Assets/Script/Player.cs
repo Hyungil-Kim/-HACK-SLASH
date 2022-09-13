@@ -14,8 +14,6 @@ public class Player : Unit
 	[System.NonSerialized]
 	public Animator animator;
 	[System.NonSerialized]
-	public KeyCode pressedAtkKey;
-	[System.NonSerialized]
 	public Dictionary<KeyCode, Action> atkKeyCode = new Dictionary<KeyCode, Action>();
 	private Dictionary<PlayerState, IState> dicState = new();
 	
@@ -94,14 +92,12 @@ public class Player : Unit
 	{
 			foreach(var key in atkKeyCode)
 			{
-				if (Input.GetKey(key.Key))
+				if (Input.GetKeyDown(key.Key))
 				{
-					IsAttack(true);
-					pressedAtkKey = key.Key;
+					animator.SetTrigger(IsAttackId);
 					ChangeState(PlayerState.Attack);
 				}
 			}
-		animator.SetBool(IsAttackId, isAttack);
 	}
 	
 	public void ChangeMoveState()

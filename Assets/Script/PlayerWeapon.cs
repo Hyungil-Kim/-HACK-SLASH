@@ -7,13 +7,13 @@ using Enum;
 public class PlayerWeapon : ScriptableObject
 {
 	public GameObject weaponObject;
-	private Weapon weapon;
+	private IWeapon weapon;
 	[SerializeField]
 	public WeaponType weaponType;
 	public Dictionary<KeyCode,Action> atkKeyCode = new();
 	private void OnEnable()
 	{
-		weapon = weaponObject.GetComponent<Weapon>();
+		weapon = weaponObject.GetComponent<IWeapon>();
 	}
 	public void AddSkill()
 	{
