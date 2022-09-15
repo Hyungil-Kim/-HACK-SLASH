@@ -21,7 +21,6 @@ public class M_Beholder : Monster
 			GameObject spawnBullet = ObjectPoolManager.Instance.Spawn("Beholder_Bullet",gameObject);
 			bullet[i] = spawnBullet.GetComponent<B_bullet>();
 		}
-		transform.position = new Vector3(transform.position.x, -0.4f, transform.position.z);
 	}
 	protected override void FixedUpdate()
 	{

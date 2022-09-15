@@ -79,6 +79,11 @@ public class Monster : Unit
 	{
 		stateMachine.StateFixedUpdate();
 	}
+
+	protected virtual void LateUpdate()
+	{
+	}
+
 	#endregion MonoBehaviour
 
 	#region Virtual Function

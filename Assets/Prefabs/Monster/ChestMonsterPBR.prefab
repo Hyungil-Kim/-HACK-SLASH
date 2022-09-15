@@ -988,6 +988,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2933742609308298280}
     m_Modifications:
+    - target: {fileID: 5492174791775227204, guid: 8723b9a3c53bc2e489652a66f6c0dcff, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5492174791775227205, guid: 8723b9a3c53bc2e489652a66f6c0dcff, type: 3}
       propertyPath: m_Name
       value: sight
