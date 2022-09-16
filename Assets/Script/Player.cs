@@ -169,7 +169,7 @@ public class Player : Unit
 	private void SetWeaponSkill()
 	{
 		atkKeyCode.Clear();
-		playerWeapon.AddSkill();
+		playerWeapon.SetSkill();
 		atkKeyCode = playerWeapon.atkKeyCode;
 	}
 	private void EndWeaponAni()

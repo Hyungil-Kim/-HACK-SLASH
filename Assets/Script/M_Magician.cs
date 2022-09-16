@@ -5,7 +5,7 @@ public class M_Magician : Monster
 {
 	private int A_AttackEnd = Animator.StringToHash("AttackEnd");
 
-	public float sqrRadius = 15;
+	public float sqrAngle = 15;
 	public float sqrLength = 2;
 
 	private Vector3 newPos;
@@ -17,7 +17,6 @@ public class M_Magician : Monster
 
 	private bool meshOn = false;
 	private bool collision = false;
-
 
 	protected override void Start()
 	{
@@ -53,12 +52,7 @@ public class M_Magician : Monster
 		{
 			for (int i = 0; i < 4; i++)
 			{
-				Vector3[] vec = new Vector3[4];
-				for (int k = 0; k < 4; k++)
-				{
-					vec[k] = sqrPos[i, k];
-				}
-				SetMesh(i, vec);
+				MakeMesh2(i);
 			}
 		}
 	}
@@ -73,14 +67,15 @@ public class M_Magician : Monster
 
 	protected override void AddAtkList()
 	{
-		atkDic.Add(() => Attack1(), 0.6f);
-		atkDic.Add(() => Attack2(), 0.4f);
+		atkDic.Add(() => Attack1(), 0.99f);
+		atkDic.Add(() => Attack2(), 0.01f);
 		atkDic.OrderBy(x => x.Value);
 	}
 
 	private void Attack1()
 	{
 		Debug.Log("1");
+		sight.viewMeshFilter.gameObject.SetActive(false);
 		//IsAttackId = Animator.StringToHash("IsAttack1");
 		SetStartPos();
 		for (int i = 0; i < 4; i++)
@@ -104,34 +99,45 @@ public class M_Magician : Monster
 	}
 	public Vector3 DirFromAngle(float angleDegrees)
 	{
-		return new Vector3(Mathf.Cos((-angleDegrees) * Mathf.Deg2Rad), 0, Mathf.Sin((-angleDegrees) * Mathf.Deg2Rad));
+		return new Vector3(Mathf.Cos((-angleDegrees +90) * Mathf.Deg2Rad), 0, Mathf.Sin((-angleDegrees +90) * Mathf.Deg2Rad));
 	}
-	private void SetSqrPos(int num, Vector3 mainPos)
-	{
-		var radius = 15f;
-		for (int i = 0; i < 4; i++)
-		{
-			if (i % 2 == num % 2)
-				radius += sqrRadius;
-			else
-				radius += (180 - sqrRadius);
-
-			sqrPos[num, i] = (mainPos + DirFromAngle(radius) * sqrLength);
-		}
-	}
-
 	private void SetStartPos()
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			startPos[i] = transform.position + DirFromAngle(i * 90) * 3;
+			startPos[i] = transform.position + DirFromAngle(i * 90) *2 ;
 			startPos[i].y += 3;
 		}
 	}
-	private void SetMesh(int num, Vector3[] vertices)
+	private void SetSqrPos(int num, Vector3 mainPos)
 	{
-		int[] triangles = new int[] { 0, 1, 2, 0, 2, 3, };
+		var radius = 0f;
+		for (int i = 0; i < 4; i++)
+		{
+			if (i % 2 == num % 2)
+				radius += sqrAngle;
+			else
+				radius += (180 - sqrAngle);
 
+			mainPos.y = 0.01f;
+			sqrPos[num, i] = (mainPos + DirFromAngle(radius)) * 2;			
+		}
+	}
+	private void MakeMesh2(int num)
+	{
+		int vertexCount = sqrPos.GetLength(1);
+		Vector3[] vertices = new Vector3[vertexCount];
+		int[] triangles = new int[(vertexCount - 2) * 3];
+		for (int i = 0; i < vertexCount ; i++)
+		{
+			vertices[i] = transform.InverseTransformPoint(sqrPos[num,i]);
+			if (i < vertexCount - 2)
+			{
+				triangles[i * 3] = 0;
+				triangles[i * 3 + 1] = i + 1;
+				triangles[i * 3 + 2] = i + 2;
+			}
+		}
 		mesh[num].Clear();
 		mesh[num].vertices = vertices;
 		mesh[num].triangles = triangles;
@@ -178,5 +184,9 @@ public class M_Magician : Monster
 		return (triarea1 + triarea2 + triarea3 + triarea4) < area + 0.1f;
 	}
 
+	private void MakeLine()
+	{
+		
+	}
 
 }

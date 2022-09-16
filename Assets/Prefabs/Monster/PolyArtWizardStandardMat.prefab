@@ -1265,12 +1265,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4073675670675823342}
   - component: {fileID: 4167001899394949086}
+  - component: {fileID: -6600220431372764131}
   - component: {fileID: 72227761253229601}
   - component: {fileID: 4135153270277183122}
   - component: {fileID: 2839068179334781187}
   - component: {fileID: 6994486103399717045}
   - component: {fileID: 1572543043196409534}
-  - component: {fileID: -6600220431372764131}
   m_Layer: 10
   m_Name: PolyArtWizardStandardMat
   m_TagString: Monster
@@ -1310,7 +1310,7 @@ Animator:
   m_GameObject: {fileID: 4072149510079119606}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: bed7a092d53e7c748bd65db98cebf9d6, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 339e243e458b1e04babb3641afd767d3, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1320,6 +1320,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!195 &-6600220431372764131
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4072149510079119606}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &72227761253229601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1377,7 +1399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 0
   maxHp: 2
-  speed: 4
+  speed: 0
   rotateSpeed: 0
   atk: 0
   watingTime: 1
@@ -1385,7 +1407,7 @@ MonoBehaviour:
   searchrange: 2
   atkAngle: 360
   CurrentState: 0
-  sqrRadius: 60
+  sqrAngle: 120
   sqrLength: 1
   viewMeshFilter:
   - {fileID: 3518874224472454786}
@@ -1416,28 +1438,6 @@ MonoBehaviour:
   meshResolution: 1
   viewMeshFilter: {fileID: 8155182850940095014}
   isCollision: 0
---- !u!195 &-6600220431372764131
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4072149510079119606}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1 &4072155542252848892
 GameObject:
   m_ObjectHideFlags: 0
