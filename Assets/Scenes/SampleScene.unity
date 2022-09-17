@@ -663,6 +663,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Set Costume_02 SD Unity-Chan WGS
       objectReference: {fileID: 0}
+    - target: {fileID: 6908228218655490393, guid: c74a8df00e6ac074f9612d061783b43c, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 6908228218655490397, guid: c74a8df00e6ac074f9612d061783b43c, type: 3}
       propertyPath: hand
       value: 

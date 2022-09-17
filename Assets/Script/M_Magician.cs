@@ -97,10 +97,6 @@ public class M_Magician : Monster
 		base.EndAttack();
 		animator.SetTrigger(A_AttackEnd);
 	}
-	public Vector3 DirFromAngle(float angleDegrees)
-	{
-		return new Vector3(Mathf.Cos((-angleDegrees +90) * Mathf.Deg2Rad), 0, Mathf.Sin((-angleDegrees +90) * Mathf.Deg2Rad));
-	}
 	private void SetStartPos()
 	{
 		for (int i = 0; i < 4; i++)
@@ -122,6 +118,10 @@ public class M_Magician : Monster
 			mainPos.y = 0.01f;
 			sqrPos[num, i] = (mainPos + DirFromAngle(radius)) * 2;			
 		}
+	}
+	public Vector3 DirFromAngle(float angleDegrees)
+	{
+		return new Vector3(Mathf.Cos((-angleDegrees +90) * Mathf.Deg2Rad), 0, Mathf.Sin((-angleDegrees +90) * Mathf.Deg2Rad));
 	}
 	private void MakeMesh2(int num)
 	{

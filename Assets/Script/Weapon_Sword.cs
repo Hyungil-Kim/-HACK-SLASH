@@ -72,4 +72,11 @@ public class Weapon_Sword : MonoBehaviour , IWeapon
 		ResetAni(currentKey);
 		GameManager.Instance.player.GetComponent<Player>().ChangeState(PlayerState.Idle);
 	}
+	private void OnCollisionEnter(Collision collision)
+	{
+		if(collision.gameObject.tag == "Monster")
+		{
+			Debug.Log("aaa");
+		}
+	}
 }

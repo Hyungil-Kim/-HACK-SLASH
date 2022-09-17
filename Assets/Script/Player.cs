@@ -16,7 +16,7 @@ public class Player : Unit
 	[System.NonSerialized]
 	public Dictionary<KeyCode, Action> atkKeyCode = new Dictionary<KeyCode, Action>();
 	private Dictionary<PlayerState, IState> dicState = new();
-	
+
 	private StateMachine stateMachine;
 	[SerializeField]
 	public PlayerState CurrentState;
@@ -57,9 +57,9 @@ public class Player : Unit
 	private void Update()
 	{
 		stateMachine.StateUpdate();
-		foreach(var state in dicState)
+		foreach (var state in dicState)
 		{
-			if(state.Value == stateMachine.CurrentState)
+			if (state.Value == stateMachine.CurrentState)
 			{
 				CurrentState = state.Key;
 			}
@@ -69,7 +69,7 @@ public class Player : Unit
 	{
 		stateMachine.StateFixedUpdate();
 	}
-	public void MovePlayer(float xAxis,float yAxis)
+	public void MovePlayer(float xAxis, float yAxis)
 	{
 		if (xAxis != 0 || yAxis != 0)
 		{
@@ -92,24 +92,24 @@ public class Player : Unit
 
 	public void ChangeAttackState()
 	{
-			foreach(var key in atkKeyCode)
+		foreach (var key in atkKeyCode)
+		{
+			if (Input.GetKeyDown(key.Key))
 			{
-				if (Input.GetKeyDown(key.Key))
-				{
-					curAtkCode = key.Key;
-					animator.SetTrigger(IsAttackId);
-					ChangeState(PlayerState.Attack);
-				}
+				curAtkCode = key.Key;
+				animator.SetTrigger(IsAttackId);
+				ChangeState(PlayerState.Attack);
 			}
+		}
 	}
-	
+
 	public void ChangeMoveState()
 	{
 		float xAxis = Input.GetAxis("Horizontal");
 		float yAxis = Input.GetAxis("Vertical");
 
 		bool check = stateMachine.CurrentState == dicState[PlayerState.Move];
-		if (!check &&(xAxis != 0 || yAxis != 0) )
+		if (!check && (xAxis != 0 || yAxis != 0))
 		{
 			ChangeState(PlayerState.Move);
 		}
@@ -127,18 +127,6 @@ public class Player : Unit
 		isMove = boolean;
 		animator.SetBool(IsMoveId, boolean);
 	}
-
-	private void OnCollisionEnter(Collision collision)
-	{
-		if(CurrentState == PlayerState.Attack)
-		{
-			if(collision.gameObject.tag == "Monster")
-			{
-				var enemy = collision.gameObject.GetComponent<Monster>();
-				DoDamage(atk,enemy.Hp);
-			}
-		}
-	}
 	private void IsAlive()
 	{
 		if (CheckDeath())
@@ -149,12 +137,12 @@ public class Player : Unit
 	private void SetWeapon(PlayerWeapon weapon)
 	{
 		GameObject handWeapon = null;
-		for(int i =0; i < hand.transform.childCount;i++)
+		for (int i = 0; i < hand.transform.childCount; i++)
 		{
-			if(hand.transform.GetChild(i).gameObject.tag == "Weapon")
+			if (hand.transform.GetChild(i).gameObject.tag == "Weapon")
 			{
 				handWeapon = hand.transform.GetChild(i).gameObject;
-				
+
 			}
 		}
 		if (handWeapon != null)
@@ -176,4 +164,16 @@ public class Player : Unit
 	{
 		playerWeapon.weapon.EndAni();
 	}
+	//private void OnCollisionEnter(Collision collision)
+	//{
+	//	if (collision.gameObject.tag == "Monster")
+	//	{
+	//		if (CurrentState == PlayerState.Attack)
+	//		{
+	//			var enemy = collision.gameObject.GetComponent<Monster>();
+	//			DoDamage(atk, enemy.Hp);
+
+	//		}
+	//	}
+	//}
 }
