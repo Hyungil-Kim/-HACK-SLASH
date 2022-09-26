@@ -9,7 +9,7 @@ namespace BehaviorTree
         SUCCESS,
         FAILURE
 	}
-    public class Node : MonoBehaviour
+    public class Node
     {
         protected NodeState state;
 
@@ -59,7 +59,6 @@ namespace BehaviorTree
 
         public bool ClearData(string key)
         {
-            object value = null;
             if (_dataContext.ContainsKey(key))
 			{
                 _dataContext.Remove(key);

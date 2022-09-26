@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
     [SerializeField]
     protected float atk;
     [SerializeField]
-    protected float watingTime;
+    public float watingTime;
 
     protected bool IsDead = false;
 
@@ -37,7 +37,7 @@ public class Unit : MonoBehaviour
         protected set { speed = value; }
     }
    
-    protected void DoDamage(float hp,float atk)
+    public void DoDamage(float hp,float atk)
 	{
         hp = hp - atk <= 0 ? 0 : hp;
 	}
