@@ -44,9 +44,8 @@ public class PatrolNode : Node
 		}
 		else
 		{
-			if (Vector3.Distance(_transform.position, movePoint) < 0.5f)
+			if (Vector3.Distance(_transform.position, movePoint) < 1f)
 			{
-				_transform.position = movePoint;
 				counter = 0f;
 				waiting = true;
 				animator.SetBool(IsMoveId, false);

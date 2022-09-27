@@ -4,12 +4,16 @@ using UnityEngine;
 using BehaviorTree;
 public class CheckPlayerInAtkRange : Node
 {
+	private int IsMoveId = Animator.StringToHash("IsMove");
+
 	private Transform _transform;
 	private NewMonster monster;
+	private Animator animator;
 	public CheckPlayerInAtkRange(Transform transform)
 	{
 		_transform = transform;
 		monster = transform.GetComponent<NewMonster>();
+		animator = monster.animator;
 	}
 	public override NodeState Evaluate()
 	{

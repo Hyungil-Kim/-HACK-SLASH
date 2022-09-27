@@ -13,14 +13,10 @@ public class NewMonster : Unit
 	private float atkAngle;
 
 	private NavMeshAgent navMesh;
-	private Vector3 destination;
 	protected Player target;
 	[NonSerialized]
 	public Spawner spawner;
-
-	private bool isMove;
-	private bool isAttack;
-
+	public Dictionary<Action, float> atkDic = new();
 	[NonSerialized]
 	public Animator animator;
 	protected virtual void Awake()
@@ -37,6 +33,7 @@ public class NewMonster : Unit
 	{
 		navMesh.speed = speed;
 		Reset();
+		AddAtkList();
 	}
 	protected virtual void Reset()
 	{
@@ -45,4 +42,24 @@ public class NewMonster : Unit
 		animator.Rebind();
 		animator.Update(0f);
 	}
+	protected virtual void AddAtkList() {; }
+
+	public void SelectAttack()
+	{
+		if (atkDic.Count <= 0) return;
+		var percent = UnityEngine.Random.Range(0f, 1f);
+		var total = 0f;
+		Action action = null;
+		foreach (var elem in atkDic)
+		{
+			total += elem.Value;
+			if (total > percent)
+			{
+				action = elem.Key;
+				break;
+			}
+		}
+		action();
+	}
+	
 }

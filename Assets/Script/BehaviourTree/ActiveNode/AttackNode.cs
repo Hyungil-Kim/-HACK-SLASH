@@ -31,7 +31,7 @@ public class AttackNode : Node
         counter += Time.deltaTime;
         if(counter >= monster.watingTime)
 		{
-            animator.SetTrigger(IsAttack1Id);
+            monster.SelectAttack();
             monster.DoDamage(target.Hp, monster.Atk);
             counter = 0f;
 		}
