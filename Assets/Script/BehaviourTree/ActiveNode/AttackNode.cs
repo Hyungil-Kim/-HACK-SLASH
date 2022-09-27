@@ -9,7 +9,6 @@ public class AttackNode : Node
     private NewMonster monster;
 
     private float counter = 0f;
-    private int IsAttack1Id = Animator.StringToHash("Attack1");
     private int IsMoveId = Animator.StringToHash("IsMove");
 
     public AttackNode(Transform transform)
@@ -28,11 +27,14 @@ public class AttackNode : Node
             state = NodeState.FAILURE;
             return state;
 		}
-        counter += Time.deltaTime;
+		if (!animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+		{
+            counter += Time.deltaTime;
+		}
         if(counter >= monster.watingTime)
 		{
             monster.SelectAttack();
-            monster.DoDamage(target.Hp, monster.Atk);
+            //monster.DoDamage(target.Hp, monster.Atk);
             counter = 0f;
 		}
         state = NodeState.RUNNING;

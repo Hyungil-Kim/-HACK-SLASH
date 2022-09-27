@@ -21,7 +21,7 @@ public class MoveTargetNode : Node
 	public override NodeState Evaluate()
 	{
 		var target = GameManager.Instance.player;
-		if (Vector3.Distance(_transform.position, target.transform.position) > 1f)
+		if (Vector3.Distance(_transform.position, target.transform.position) > monster.atkRange)
 		{
 			animator.SetBool(IsMoveId, true);
 			navMesh.SetDestination(target.transform.position);
